@@ -3,10 +3,107 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Weather</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/public/css/index.css" />
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+
+    <title>Smash-It Weather</title>
   </head>
   <body>
-    <header>Not necessary</header>
-    <main>Some content</main>
+    <main>
+      <header class="header">
+        <nav class="home-wrapper"><a href="/"> weather.smash-it</a></nav>
+      </header>
+      <div class="wrapper">
+        <section class="panel">
+          <form id="weather-form" class="search-container">
+            <label>
+              <span>Enter a location</span>
+              <input
+                type="text"
+                name="search"
+                id="search"
+                class="search-input"
+                placeholder="Enter a location"
+                required
+                autofocus
+              />
+            </label>
+            <button type="submit" id="search-btn" class="btn">
+              <span class="iconify" data-icon="mdi-magnify"></span>
+            </button>
+          </form>
+          <ul class="history">
+            <li class="history__item">Upper Sakponba, Benin</li>
+            <li class="history__item">Ekosodin, Benin</li>
+            <li class="history__item">Oleh, Delta</li>
+          </ul>
+          <div class="details">
+            <h2 class="details__header">Weather Details</h2>
+            <ul class="report">
+              <li class="report__item">
+                <span>Humidity</span
+                ><span class="report-data"
+                  ><span id="humidity">80</span> %</span
+                >
+              </li>
+              <li class="report__item">
+                <span>Feels Like</span
+                ><span class="report-data"><span id="feels">30</span> ˚C</span>
+              </li>
+              <li class="report__item">
+                <span>Cloud</span
+                ><span class="report-data"><span id="clouds">87</span> %</span>
+              </li>
+              <li class="report__item">
+                <span>Wind Speed</span
+                ><span class="report-data"
+                  ><span id="wind">7.30</span> km/h</span
+                >
+              </li>
+              <li class="report__item">
+                <span>Visibility</span
+                ><span class="report-data"
+                  ><span id="visibility">10</span> km</span
+                >
+              </li>
+            </ul>
+          </div>
+        </section>
+        <section class="screen">
+          <div>
+            <div class="location">
+              <span class="iconify" data-icon="mdi-map-marker"></span>
+              <div>
+                <div class="location__position">Bariga, Lagos</div>
+                <span class="location__time">Sun, 6 Sep 2020</span>
+              </div>
+            </div>
+            <div class="weather">
+              <span class="weather__temp">23˚</span>
+              <span class="weather__desc">Light Rain</span>
+              <img
+                src="http://openweathermap.org/img/wn/10n@2x.png"
+                alt="weather icon"
+                class="weather__icon"
+              />
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <script src="/public/scripts/index.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/__/firebase/7.19.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="/__/firebase/7.19.1/firebase-analytics.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
   </body>
 </html>
