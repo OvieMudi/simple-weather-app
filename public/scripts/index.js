@@ -23,7 +23,7 @@
     const owm = 'ca558ab728c8a05e2e1a928a16b2e822';
     const nominatimApi = `https://nominatim.openstreetmap.org/?addressdetails=1&q=${location}&format=json&limit=1`;
     const weatherApi = (lat, lon) =>
-      `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${owm}`;
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${owm}`;
 
     fetch(nominatimApi)
       .then((res) => res.json())
@@ -38,7 +38,7 @@
             time.textContent = getDateTime(weatherResponse.current.dt);
             temp.textContent = Math.floor(weatherResponse.current.temp) + '˚';
             desc.textContent = weatherResponse.current.weather[0].description;
-            icon.src = `http://openweathermap.org/img/wn/${weatherResponse.current.weather[0].icon}@2x.png`;
+            icon.src = `https://openweathermap.org/img/wn/${weatherResponse.current.weather[0].icon}@2x.png`;
 
             humidity.textContent = weatherResponse.current.humidity;
             feels.textContent = Math.floor(weatherResponse.current.feels_like);
