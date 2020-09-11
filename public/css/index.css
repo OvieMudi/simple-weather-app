@@ -69,11 +69,15 @@ Header
   height: 100%;
 }
 
+.mob-wrapper {
+  display: none;
+}
+
 /* ==================== 
  Search Container
 ====================== */
 .panel {
-  flex-basis: 35%;
+  flex-basis: 30%;
   min-width: 400px;
   background-color: rgba(45, 51, 58, 0.9);
   /* padding-left: var(--section-side-padding); */
@@ -98,7 +102,7 @@ Header
 .btn {
   width: 10rem;
   border: none;
-  height: 80px;
+  height: 8rem;
   outline: none;
   background-color: rgba(182, 204, 229, 0.37);
   cursor: pointer;
@@ -168,7 +172,8 @@ Header
 Weather Result Screen
 ====================== */
 .screen {
-  flex-basis: 65%;
+  flex-basis: 70%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -192,6 +197,7 @@ Weather Result Screen
   font-size: 2rem;
   font-weight: 500;
   padding: 0 1rem;
+  white-space: normal;
 }
 
 .location__time {
@@ -219,4 +225,47 @@ Weather Result Screen
 
 .weather__icon {
   filter: brightness(200%);
+}
+
+@media only screen and (max-width: 880px) {
+  html {
+    font-size: 50%;
+  }
+  .panel {
+    min-width: 350px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .wrapper {
+    display: block;
+    padding: 0 2rem;
+  }
+
+  .mob-wrapper {
+    display: block;
+    height: 20%;
+  }
+
+  .panel {
+    display: none;
+  }
+
+  .screen {
+    height: 80%;
+  }
+
+  .screen > div {
+    transform: translateY(20vh);
+  }
+
+  /* .search-container {
+    width: ;
+  } */
+
+  .search-container > label {
+    width: calc(100% - 15rem);
+    padding-left: var(--section-side-padding);
+    margin: auto;
+  }
 }

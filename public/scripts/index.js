@@ -1,7 +1,9 @@
 (() => {
   console.log('Here!!!');
   const weatherForm = document.querySelector('#weather-form');
+  const mobWeatherForm = document.querySelector('#mob-weather-form');
   const searchInput = document.querySelector('#search');
+  const mobSearchInput = document.querySelector('#mob-search');
 
   const position = document.querySelector('.location__position');
   const time = document.querySelector('.location__time');
@@ -14,14 +16,65 @@
   const wind = document.querySelector('#wind');
   const visibility = document.querySelector('#visibility');
 
+  let searchHistory = [];
+
   weatherForm.addEventListener('submit', (event) => {
     event.preventDefault();
+    searchHistory.unshift(searchInput.value);
+    if (searchHistory.length > 3) {
+      searchHistory.pop();
+    }
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+
     fetchWeather(searchInput.value);
   });
 
-  function fetchWeather(location = 'sokoto') {
+  mobWeatherForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    searchHistory.unshift(mobSearchInput.value);
+    if (searchHistory.length > 3) {
+      searchHistory.pop();
+    }
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+
+    fetchWeather(mobSearchInput.value);
+  });
+
+  let location;
+  let weather;
+
+  const setPageItems = () => {
+    console.log('setPageItems -> searchHistory', searchHistory);
+
+    location = JSON.parse(localStorage.getItem('location'));
+    weather = JSON.parse(localStorage.getItem('weatherResponse'));
+
+    if (location && weather) {
+      searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
+      if (searchInput) {
+        searchInput.value = searchHistory ? searchHistory[0] : '';
+      } else if (mobSearchInput) {
+        mobSearchInput.value = searchHistory ? searchHistory[0] : '';
+      }
+      position.textContent = location.display_name;
+      time.textContent = getDateTime(weather.current.dt);
+      temp.textContent = Math.floor(weather.current.temp) + '˚';
+      desc.textContent = weather.current.weather[0].description;
+      icon.src = `https://openweathermap.org/img/wn/${weather.current.weather[0].icon}@2x.png`;
+
+      humidity.textContent = weather.current.humidity;
+      feels.textContent = Math.floor(weather.current.feels_like);
+      clouds.textContent = weather.current.clouds;
+      wind.textContent = Number(weather.current.wind_speed * 3.6).toFixed(2);
+      visibility.textContent = weather.current.visibility / 1000;
+    }
+  };
+
+  setPageItems();
+
+  function fetchWeather(locationInput = 'sokoto') {
     const owm = 'ca558ab728c8a05e2e1a928a16b2e822';
-    const nominatimApi = `https://nominatim.openstreetmap.org/?addressdetails=1&q=${location}&format=json&limit=1`;
+    const nominatimApi = `https://nominatim.openstreetmap.org/?addressdetails=1&q=${locationInput}&format=json&limit=1`;
     const weatherApi = (lat, lon) =>
       `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${owm}`;
 
@@ -30,23 +83,16 @@
       .then((response) => {
         return response[0];
       })
-      .then((location) => {
-        fetch(weatherApi(location.lat, location.lon))
+      .then((loc) => {
+        localStorage.setItem('location', JSON.stringify(loc));
+        fetch(weatherApi(loc.lat, loc.lon))
           .then((res) => res.json())
           .then((weatherResponse) => {
-            position.textContent = location.display_name;
-            time.textContent = getDateTime(weatherResponse.current.dt);
-            temp.textContent = Math.floor(weatherResponse.current.temp) + '˚';
-            desc.textContent = weatherResponse.current.weather[0].description;
-            icon.src = `https://openweathermap.org/img/wn/${weatherResponse.current.weather[0].icon}@2x.png`;
-
-            humidity.textContent = weatherResponse.current.humidity;
-            feels.textContent = Math.floor(weatherResponse.current.feels_like);
-            clouds.textContent = weatherResponse.current.clouds;
-            wind.textContent = Number(
-              weatherResponse.current.wind_speed * 3.6
-            ).toFixed(2);
-            visibility.textContent = weatherResponse.current.visibility / 1000;
+            localStorage.setItem(
+              'weatherResponse',
+              JSON.stringify(weatherResponse)
+            );
+            setPageItems();
           })
           .catch((weatherError) => {
             console.error(weatherError);

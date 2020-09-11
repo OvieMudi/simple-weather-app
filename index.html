@@ -61,7 +61,7 @@
               <input
                 type="text"
                 name="search"
-                id="search"
+                id="main-search"
                 class="search-input"
                 placeholder="Enter a location"
                 required
@@ -128,6 +128,26 @@
               />
             </div>
           </div>
+          <!-- mobile -->
+        </section>
+        <section class="mob-wrapper">
+          <form id="mob-weather-form" class="search-container">
+            <label>
+              <span>Enter a location</span>
+              <input
+                type="text"
+                name="search"
+                id="mob-search"
+                class="search-input"
+                placeholder="Enter a location"
+                required
+                autofocus
+              />
+            </label>
+            <button type="submit" id="search-btn" class="btn">
+              <span class="iconify" data-icon="mdi-magnify"></span>
+            </button>
+          </form>
         </section>
       </div>
     </main>
